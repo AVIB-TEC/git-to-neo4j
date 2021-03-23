@@ -1,2 +1,2 @@
 # git-to-neo4j
-This repository extracts code from github and then compares to Neo4j database and uploads the new information.
+This project in NodeJS extracts code from github and then compares to Neo4j database and uploads the new information.
