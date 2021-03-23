@@ -1,8 +1,5 @@
 # git-to-neo4j
-This repository extracts code from github and then compares to Neo4j database and uploads the new information.
-
-
-# GIT 2 NEO4J
+This project in NodeJS extracts code from github and then compares to Neo4j database and uploads the new information.
 
 Aplicación desarrollada en NodeJS para extraer el historial de cambios de un repositorio en Git, en los registros del proyecto correspondiente, de una base de datos Neo4j. 
 
