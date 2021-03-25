@@ -29,31 +29,25 @@ export class Command{
     static async createLog() {
         let firsStepCommands = [
 
-            /**
-             * Comando para limpiar la carpeta public, en donde se
-             * almacenara el repositorio y el archivo de historial
-             */
+            // Comando para limpiar la carpeta public, en donde se
+            //almacenara el repositorio y el archivo de historial
             `del -f ${config.file_log_url}`,
 
-            /**
-             * Se asegura que exista la carpeta public
-             */
+            //Borra la carpeta si ya existe
+            'if exist public\\repo  rmdir /s /q  public\\repo',
+            
+            //Se asegura que exista la carpeta public
             'mkdir public\\repo',
 
-            /**
-             * Realiza la descarga del codigo fuente del repositorio
-             * remoto
-             */
+            
+            //Realiza la descarga del codigo fuente del repositorio remoto
             `git clone ${config.repository_url} ./public\\repo`,
 
-            /**
-             * Extrae la informacion del historial del repositorio
-             */
+
+            // Extrae la informacion del historial del repositorio
             `git --git-dir=public\\repo\\.git log --stat --name-only >> ${config.file_log_url}`,
 
-            /**
-             * elimina el repositorio
-             */
+            // elimina el repositorio
             ' rmdir /s /q  public\\repo'
         ];
     
