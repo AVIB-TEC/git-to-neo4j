@@ -2,7 +2,7 @@ import { config } from '../config/app.config';
 import { Commit } from '../models/commit';
 import { File } from '../models/file';
 
-import { v1 as neo4j } from 'neo4j-driver';
+import  neo4j  from 'neo4j-driver';
 import  validator  from 'validator';
 
 export class Neo4jHelper {
@@ -31,7 +31,8 @@ export class Neo4jHelper {
    * @param query 
    */
     protected run(query) {
-        let session = this.driver.session({database: 'avibdb'});
+        //let session = this.driver.session({database: 'avibdb'});
+        let session = this.driver.session();
 
         return session
             .run(query)
@@ -64,6 +65,7 @@ export class Neo4jHelper {
             }
             catch (e) {
                 console.log("Error Neo4j - buscando archivos");
+                console.log(e);
                 console.log(query);
                 continue;
                 //throw e;
@@ -115,6 +117,7 @@ export class Neo4jHelper {
      * @param files 
      */
     async saveCommit(commit:Commit, files) {
+        console.log(`Trying commit: ${commit.id}`)
         if (files != null && files.length < 1 && !this.isIterable(files)) return;
 
         let comment = validator.escape(commit.comment||'');
@@ -127,8 +130,13 @@ export class Neo4jHelper {
         ];
 
         let savedFiles = 0;
-
+        let cont = 1;
         for ( let file of files ) {
+            if(cont % 10 === 0){
+                console.log(`Checked file ${cont} of ${files.length}`);
+            }
+            cont+=1;
+
             let relQuery = [
                 ` MATCH (p:Project{id:'${config.neo4j_project_id}'})-[:HAS_CLASS]->(class:Class) `,
                 ` WHERE class.qualifiedname = '${file.get('c').properties.qualifiedname}' `,
